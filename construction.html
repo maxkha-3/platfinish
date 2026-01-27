@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="sv">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Plåtfinish Skellefteå AB — Under konstruktion</title>
+    <meta name="description" content="Plåtfinish Skellefteå AB — webbplatsen är under konstruktion." />
+    <meta name="robots" content="noindex,nofollow" />
+
+    <style>
+        :root{
+            --bg: #0b0f14;
+            --card: rgba(255,255,255,0.06);
+            --border: rgba(255,255,255,0.12);
+            --text: rgba(255,255,255,0.92);
+            --muted: rgba(255,255,255,0.70);
+            --accent: #7dd3fc; /* ljusblå */
+            --accent2: #a78bfa; /* lila */
+        }
+
+        *{ box-sizing: border-box; }
+        html, body { height: 100%; }
+        body{
+            margin: 0;
+            font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+            color: var(--text);
+            background:
+                    radial-gradient(900px 600px at 20% 15%, rgba(125,211,252,0.20), transparent 55%),
+                    radial-gradient(900px 600px at 85% 80%, rgba(167,139,250,0.18), transparent 55%),
+                    radial-gradient(800px 500px at 50% 50%, rgba(255,255,255,0.06), transparent 60%),
+                    var(--bg);
+            display: grid;
+            place-items: center;
+            padding: 24px;
+        }
+
+        .wrap{
+            width: 100%;
+            max-width: 880px;
+        }
+
+        .card{
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 28px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:before{
+            content:"";
+            position:absolute;
+            inset:-2px;
+            background: linear-gradient(135deg, rgba(125,211,252,0.25), rgba(167,139,250,0.20), rgba(125,211,252,0.15));
+            filter: blur(26px);
+            opacity: 0.65;
+            z-index: 0;
+        }
+
+        .content{
+            position: relative;
+            z-index: 1;
+            display: grid;
+            gap: 18px;
+        }
+
+        .badge{
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: rgba(0,0,0,0.15);
+            width: fit-content;
+            color: var(--muted);
+            font-size: 14px;
+            letter-spacing: .2px;
+        }
+
+        .dot{
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 18px rgba(125,211,252,0.75);
+            animation: pulse 1.6s ease-in-out infinite;
+        }
+
+        @keyframes pulse{
+            0%, 100% { transform: scale(1); opacity: .85; }
+            50% { transform: scale(1.35); opacity: 1; }
+        }
+
+        h1{
+            margin: 0;
+            font-size: clamp(28px, 4vw, 44px);
+            line-height: 1.08;
+            letter-spacing: -0.6px;
+        }
+
+        p{
+            margin: 0;
+            color: var(--muted);
+            font-size: 16px;
+            line-height: 1.6;
+            max-width: 65ch;
+        }
+
+        .actions{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 6px;
+        }
+
+        a.btn{
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 11px 14px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 600;
+            background: rgba(0,0,0,0.18);
+            transition: transform .15s ease, background .15s ease, border-color .15s ease;
+        }
+        a.btn:hover{
+            transform: translateY(-1px);
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.22);
+        }
+
+        a.btn.primary{
+            border-color: rgba(125,211,252,0.55);
+            background: linear-gradient(135deg, rgba(125,211,252,0.18), rgba(167,139,250,0.14));
+        }
+
+        .footer{
+            margin-top: 12px;
+            color: rgba(255,255,255,0.55);
+            font-size: 13px;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .small{
+            color: rgba(255,255,255,0.60);
+        }
+
+        .divider{
+            height: 1px;
+            background: rgba(255,255,255,0.10);
+            margin: 14px 0 6px;
+        }
+    </style>
+</head>
+
+<body>
+<main class="wrap">
+    <section class="card" aria-label="Under konstruktion">
+        <div class="content">
+            <div class="badge">
+                <span class="dot" aria-hidden="true"></span>
+                Webbplatsen byggs just nu
+            </div>
+
+            <h1>Plåtfinish Skellefteå AB<br/>är <span style="color: var(--accent);">under konstruktion</span></h1>
+
+            <p>
+                Vi finputsar detaljerna och lanserar snart.
+            </p>
+
+            <div class="divider"></div>
+
+            <div class="footer">
+                <span class="small">© <span id="year"></span> Plåtfinish Skellefteå AB</span>
+                <span class="small">Skellefteå, Sverige</span>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
