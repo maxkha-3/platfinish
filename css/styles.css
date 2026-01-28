@@ -492,7 +492,7 @@ h2 {
 .step__num {
     font-weight: 900;
     letter-spacing: .12em;
-    color: #ffffffcc;
+    color: rgba(0, 0, 0, 0.8);
     min-width: 44px;
 }
 
@@ -535,6 +535,14 @@ h2 {
     background: radial-gradient(600px 300px at 30% 30%, #8b5cf622, transparent 60%),
     radial-gradient(600px 300px at 70% 40%, #22c55e18, transparent 58%),
     linear-gradient(180deg, #0b0d12, #070910);
+}
+
+.shot__fals {
+    background: url('../assets/hero-roof.jpg') center/cover no-repeat;
+}
+
+.shot__gutters {
+    background: url('../assets/gutters.png') center/cover no-repeat;
 }
 
 .shot__cap {
