@@ -117,6 +117,58 @@
 
   document.addEventListener('click', handleAnchorClick);
 
+  // Tjänster tiles: make "hover to reveal" also work on click/tap (mobile)
+  const serviceTiles = Array.from(document.querySelectorAll('.tile--bg'));
+  if (serviceTiles.length) {
+    // Robust background URL resolution (works even if site is hosted in a subfolder)
+    serviceTiles.forEach((tile) => {
+      const bg = tile.getAttribute('data-bg');
+      if (!bg) return;
+      try {
+        const abs = new URL(bg, document.baseURI).href;
+        tile.style.setProperty('--tile-bg', `url("${abs}")`);
+      } catch (_) {
+        // Fallback: use raw path
+        tile.style.setProperty('--tile-bg', `url("${bg}")`);
+      }
+    });
+
+    function deactivateAll(except = null) {
+      serviceTiles.forEach((t) => {
+        if (except && t === except) return;
+        t.classList.remove('is-active');
+        t.setAttribute('aria-pressed', 'false');
+      });
+    }
+
+    serviceTiles.forEach((tile) => {
+      tile.setAttribute('aria-pressed', 'false');
+      tile.addEventListener('click', (e) => {
+        // Ignore clicks on actual links inside tiles (future-proof)
+        if (e.target && e.target.closest('a')) return;
+        const active = tile.classList.contains('is-active');
+        deactivateAll(tile);
+        tile.classList.toggle('is-active', !active);
+        tile.setAttribute('aria-pressed', (!active).toString());
+      });
+
+      tile.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          tile.click();
+        }
+        if (e.key === 'Escape') {
+          deactivateAll();
+          tile.blur();
+        }
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!e.target || !e.target.closest('.tile--bg')) deactivateAll();
+    });
+  }
+
   // Optional: keyboard shortcuts within snap container
   document.addEventListener('keydown', (e) => {
     if (!snap) return;

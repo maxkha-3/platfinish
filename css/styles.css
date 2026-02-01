@@ -430,6 +430,86 @@ h2 {
     box-shadow: 0 10px 28px #00000030;
 }
 
+/* Tiles with background images (Tjänster)
+   - Default: image is subtle so text is readable
+   - Hover/active/focus: image becomes fully visible and body text fades out
+   - Rubriken (h3) stays on top of the image
+*/
+.tile--bg {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.tile--bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: var(--tile-bg, none);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.18;
+    transform: scale(1.02);
+    transition: opacity .25s ease, transform .35s ease;
+    z-index: 0;
+}
+
+/* Subtle dark wash so default text always stays readable */
+.tile--bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #0b0d12cc, #0b0d1280 55%, #0b0d12cc);
+    opacity: 0.65;
+    transition: opacity .25s ease;
+    z-index: 1;
+}
+
+.tile--bg h3,
+.tile--bg p {
+    position: relative;
+    z-index: 2;
+}
+
+.tile--bg h3 {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 12px;
+    background: rgba(251, 251, 251, 0.8);
+    border: 1px solid #ffffff1a;
+    backdrop-filter: blur(8px);
+}
+
+.tile--bg p {
+    transition: opacity .2s ease, transform .2s ease;
+}
+
+.tile--bg:hover::before,
+.tile--bg:focus-visible::before,
+.tile--bg.is-active::before {
+    opacity: 1;
+    transform: scale(1.06);
+}
+
+.tile--bg:hover::after,
+.tile--bg:focus-visible::after,
+.tile--bg.is-active::after {
+    opacity: 0.15;
+}
+
+.tile--bg:hover p,
+.tile--bg:focus-visible p,
+.tile--bg.is-active p {
+    opacity: 0;
+    transform: translateY(6px);
+}
+
+.tile--bg:focus-visible {
+    outline: 2px solid #ffffff55;
+    outline-offset: 3px;
+}
+
 .tile__icon {
     width: 42px;
     height: 42px;
