@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://platfinish.se/sitemap.xml
