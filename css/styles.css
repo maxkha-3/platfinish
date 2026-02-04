@@ -12,7 +12,7 @@
     --accent2: #64748b; /* slate */
     --shadow: 0 18px 45px rgba(11, 18, 32, .10);
     --radius: 22px;
-    --max: 1120px;
+    --max: 1220px;
 }
 
 * {
@@ -529,7 +529,6 @@ h2 {
 
 .tile p {
     margin: 0;
-    color: var(--muted);
     line-height: 1.55;
     font-size: 14px
 }

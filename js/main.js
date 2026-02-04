@@ -103,19 +103,52 @@
 
   counterEls.forEach((el) => counterIO.observe(el));
 
-  // Improve anchor scrolling within snap container
-  function handleAnchorClick(e) {
-    const a = e.target.closest('a[href^="#"]');
+  // Improve anchor scrolling within the snap container.
+  // Some Android browsers struggle to scroll overflow containers when using hash links + scrollIntoView.
+  // We therefore scroll the snap container explicitly when possible.
+  function scrollToTarget(target) {
+    const header = document.querySelector('.topbar');
+    const headerOffset = header ? header.offsetHeight : 0;
+
+    if (snap && snap.contains(target)) {
+      const targetRect = target.getBoundingClientRect();
+      const snapRect = snap.getBoundingClientRect();
+      const top = (targetRect.top - snapRect.top) + snap.scrollTop - headerOffset;
+      snap.scrollTo({ top, behavior: 'smooth' });
+      // Improve accessibility: move focus without jumping
+      target.setAttribute('tabindex', '-1');
+      target.focus({ preventScroll: true });
+      return;
+    }
+
+    // Fallback
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function handleAnchorActivate(e) {
+    const a = e.target && e.target.closest ? e.target.closest('a[href^="#"]') : null;
     if (!a) return;
     const id = a.getAttribute('href');
     if (!id || id.length < 2) return;
     const target = document.querySelector(id);
     if (!target) return;
     e.preventDefault();
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    scrollToTarget(target);
   }
 
-  document.addEventListener('click', handleAnchorClick);
+  // Use both click + touchend for wider Android compatibility.
+  // Guard to avoid double-triggering when a synthetic click follows a touch.
+  let lastTouchTs = 0;
+
+  document.addEventListener('click', (e) => {
+    if (Date.now() - lastTouchTs < 700) return;
+    handleAnchorActivate(e);
+  });
+
+  document.addEventListener('touchend', (e) => {
+    lastTouchTs = Date.now();
+    handleAnchorActivate(e);
+  }, { passive: false });
 
   // Tjänster tiles: make "hover to reveal" also work on click/tap (mobile)
   const serviceTiles = Array.from(document.querySelectorAll('.tile--bg'));
